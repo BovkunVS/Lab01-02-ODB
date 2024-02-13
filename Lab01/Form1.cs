@@ -1,3 +1,4 @@
+Ôªøusing Microsoft.Data.SqlClient;
 using System.Configuration;
 using System.Data.Common;
 
@@ -7,46 +8,80 @@ namespace Lab01
     {
         public Form1()
         {
+            // –í—ã–∑–æ–≤ –¥–∏–∞–ª–æ–≥–æ–≤–æ–≥–æ –æ–∫–Ω–∞ —Å –∏–Ω—Ñ–æ–π –æ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏–∏ –∫ –ë–î
+            string connectionString = GetConnectionString();
+            MessageBox.Show($"–°—Ç—Ä–æ–∫–∞ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏—è:\n{connectionString}", "–ü–æ–¥–∫–ª—é—á–µ–Ω–∏–µ –∫ –±–∞–∑–µ –¥–∞–Ω–Ω—ã—Ö", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             InitializeComponent();
+
             DbProviderFactories.RegisterFactory("Microsoft.Data.SqlClient", Microsoft.Data.SqlClient.SqlClientFactory.Instance);
+        }
+
+        private static string GetConnectionString()
+        {
+            var connect = new SqlConnectionStringBuilder();
+            connect.InitialCatalog = "Exibition";
+            connect.DataSource = @"VDBS";
+            connect.PersistSecurityInfo = true;
+            connect.UserID = "dbuser";
+            connect.Password = "dbuser";
+            connect.Encrypt = false;
+            connect.ConnectTimeout = 30;
+            return connect.ConnectionString;
         }
 
         private void loadingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbResult.Clear();
-            // œÓÎÛ˜ÂÌËÂ ÒÚÓÍË ÔÓ‰ÍÎ˛˜ÂÌËˇ Ë ÔÓÒÚ‡‚˘ËÍ‡ ËÁ *.config
+            // –ü–æ–ª—É—á–µ–Ω–∏–µ —Å—Ç—Ä–æ–∫–∏ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏—è –∏ –ø–æ—Å—Ç–∞–≤—â–∏–∫–∞ –∏–∑ *.config
             string dp = ConfigurationManager.AppSettings["provider"];
-            string cnStr = ConfigurationManager.AppSettings["connectionString"];
+            //string cnStr = ConfigurationManager.AppSettings["connectionString"];
+            string cnStr = GetConnectionString();
 
-            // œÓÎÛ˜ÂÌËÂ „ÂÌÂ‡ÚÓ‡ ÔÓÒÚ‡‚˘ËÍ‡
+            // –ü–æ–ª—É—á–µ–Ω–∏–µ –≥–µ–Ω–µ—Ä–∞—Ç–æ—Ä–∞ –ø–æ—Å—Ç–∞–≤—â–∏–∫–∞
             DbProviderFactory df = DbProviderFactories.GetFactory(dp);
 
-            using (DbConnection cn = df.CreateConnection())
+            DbConnection cn = df.CreateConnection();
+
+            try
             {
-                // ¬˚‚Ó‰ Ó·˙ÂÍÚ‡ ÔÓ‰ÍÎ˛˜ÂÌËˇ
-                rtbResult.AppendText("Œ·˙ÂÍÚ ÔÓ‰ÍÎ˛˜ÂÌËˇ --> " + cn.GetType().Name + "\n");
+                // –í—ã–≤–æ–¥ –æ–±—ä–µ–∫—Ç–∞ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏—è
+                rtbResult.AppendText("–û–±—ä–µ–∫—Ç –ø–æ–¥–∫–ª—é—á–µ–Ω–∏—è --> " + cn.GetType().Name + "\n");
 
                 cn.ConnectionString = cnStr;
+                //–û—Ç–∫—Ä—ã—Ç—å –ø–æ–¥–∫–ª—é—á–µ–Ω–∏–µ
                 cn.Open();
-                // —ÓÁ‰‡ÌËÂ Ó·˙ÂÍÚ‡ ÍÓÏ‡Ì‰˚
+
+                // –°–æ–∑–¥–∞–Ω–∏–µ –æ–±—ä–µ–∫—Ç–∞ –∫–æ–º–∞–Ω–¥—ã
                 DbCommand cmd = df.CreateCommand();
-                rtbResult.AppendText("Œ·˙ÂÍÚ ÍÓÏ‡Ì‰˚ --> " + df.CreateCommand().GetType().Name + "\n");
+                rtbResult.AppendText("–û–±—ä–µ–∫—Ç –∫–æ–º–∞–Ω–¥—ã --> " + cmd.GetType().Name + "\n");
 
                 cmd.Connection = cn;
                 cmd.CommandText = "Select * From Company";
 
-                // ¬˚‚Ó‰ ‰‡ÌÌ˚ı Ò ÔÓÏÓ˘¸˛ Ó·˙ÂÍÚ‡ Ò˜ËÚ˚‚‡ÌËˇ ‰‡ÌÌ˚ı
+                // –í—ã–≤–æ–¥ –¥–∞–Ω–Ω—ã—Ö —Å –ø–æ–º–æ—â—å—é –æ–±—ä–µ–∫—Ç–∞ —Å—á–∏—Ç—ã–≤–∞–Ω–∏—è –¥–∞–Ω–Ω—ã—Ö
                 using (DbDataReader dr = cmd.ExecuteReader())
                 {
-                    rtbResult.AppendText("Œ·˙ÂÍÚ Ò˜ËÚ˚‚‡ÌËˇ ‰‡ÌÌ˚ı --> " + dr.GetType().Name + "\n");
-                    rtbResult.AppendText("\n--- “ÂÍÛ˘ÂÂ ÒÓÒÚ‡‚Îˇ˛˘ÂÂ Ú‡·ÎËˆ˚ Company ---\n");
+                    rtbResult.AppendText("–û–±—ä–µ–∫—Ç —Å—á–∏—Ç—ã–≤–∞–Ω–∏—è –¥–∞–Ω–Ω—ã—Ö --> " + dr.GetType().Name + "\n");
+                    rtbResult.AppendText("\n--- –¢–µ–∫—É—â–µ–µ —Å–æ—Å—Ç–∞–≤–ª—è—é—â–µ–µ —Ç–∞–±–ª–∏—Ü—ã Company ---\n");
                     rtbResult.AppendText("--------------------------------------------------------------------------\n");
                     while (dr.Read())
                     {
-                        rtbResult.AppendText("-> ‘ËÏ‡ #" + dr["id_company"] + " -- " + dr["name"] + " -- " + dr["id_physical_address"] + " -- " + dr["id_owner"] + "\n");
+                        rtbResult.AppendText("-> –§–∏—Ä–º–∞ #" + dr["id_company"] + " -- " + dr["name"] + " -- " + dr["id_physical_address"] + " -- " + dr["id_owner"] + "\n");
                     }
                 }
             }
+            catch (DbException ex)
+            {
+                // –ü—Ä–æ—Ç–æ–∫–æ–ª–∏—Ä–æ–≤–∞—Ç—å –∏—Å–∫–ª—é—á–µ–Ω–∏–µ
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                // –ì–∞—Ä–∞–Ω—Ç–∏—Ä–æ–≤–∞—Ç—å –≤—ã—Å–≤–æ–±–æ–∂–¥–µ–Ω–∏–µ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏—è
+                cn.Close();
+            }
+
         }
 
     }
