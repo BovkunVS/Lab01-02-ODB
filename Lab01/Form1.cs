@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+п»їusing Microsoft.Data.SqlClient;
 using System.Configuration;
 using System.Data.Common;
 
@@ -8,9 +8,9 @@ namespace Lab01
     {
         public Form1()
         {
-            // Вызов диалогового окна с инфой о подключении к БД
+            // Р’С‹Р·РѕРІ РґРёР°Р»РѕРіРѕРІРѕРіРѕ РѕРєРЅР° СЃ РёРЅС„РѕР№ Рѕ РїРѕРґРєР»СЋС‡РµРЅРёРё Рє Р‘Р”
             string connectionString = GetConnectionString();
-            MessageBox.Show($"Строка подключения:\n{connectionString}", "Подключение к базе данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"РЎС‚СЂРѕРєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ:\n{connectionString}", "РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             InitializeComponent();
 
@@ -33,52 +33,52 @@ namespace Lab01
         private void loadingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbResult.Clear();
-            // Получение строки подключения и поставщика из *.config
+            // РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂРѕРєРё РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рё РїРѕСЃС‚Р°РІС‰РёРєР° РёР· *.config
             string dp = ConfigurationManager.AppSettings["provider"];
             //string cnStr = ConfigurationManager.AppSettings["connectionString"];
             string cnStr = GetConnectionString();
 
-            // Получение генератора поставщика
+            // РџРѕР»СѓС‡РµРЅРёРµ РіРµРЅРµСЂР°С‚РѕСЂР° РїРѕСЃС‚Р°РІС‰РёРєР°
             DbProviderFactory df = DbProviderFactories.GetFactory(dp);
 
             DbConnection cn = df.CreateConnection();
 
             try
             {
-                // Вывод объекта подключения
-                rtbResult.AppendText("Объект подключения --> " + cn.GetType().Name + "\n");
+                // Р’С‹РІРѕРґ РѕР±СЉРµРєС‚Р° РїРѕРґРєР»СЋС‡РµРЅРёСЏ
+                rtbResult.AppendText("РћР±СЉРµРєС‚ РїРѕРґРєР»СЋС‡РµРЅРёСЏ --> " + cn.GetType().Name + "\n");
 
                 cn.ConnectionString = cnStr;
-                //Открыть подключение
+                //РћС‚РєСЂС‹С‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёРµ
                 cn.Open();
 
-                // Создание объекта команды
+                // РЎРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° РєРѕРјР°РЅРґС‹
                 DbCommand cmd = df.CreateCommand();
-                rtbResult.AppendText("Объект команды --> " + cmd.GetType().Name + "\n");
+                rtbResult.AppendText("РћР±СЉРµРєС‚ РєРѕРјР°РЅРґС‹ --> " + cmd.GetType().Name + "\n");
 
                 cmd.Connection = cn;
                 cmd.CommandText = "Select * From Company";
 
-                // Вывод данных с помощью объекта считывания данных
+                // Р’С‹РІРѕРґ РґР°РЅРЅС‹С… СЃ РїРѕРјРѕС‰СЊСЋ РѕР±СЉРµРєС‚Р° СЃС‡РёС‚С‹РІР°РЅРёСЏ РґР°РЅРЅС‹С…
                 using (DbDataReader dr = cmd.ExecuteReader())
                 {
-                    rtbResult.AppendText("Объект считывания данных --> " + dr.GetType().Name + "\n");
-                    rtbResult.AppendText("\n--- Текущее составляющее таблицы Company ---\n");
+                    rtbResult.AppendText("РћР±СЉРµРєС‚ СЃС‡РёС‚С‹РІР°РЅРёСЏ РґР°РЅРЅС‹С… --> " + dr.GetType().Name + "\n");
+                    rtbResult.AppendText("\n--- РўРµРєСѓС‰РµРµ СЃРѕСЃС‚Р°РІР»СЏСЋС‰РµРµ С‚Р°Р±Р»РёС†С‹ Company ---\n");
                     rtbResult.AppendText("--------------------------------------------------------------------------\n");
                     while (dr.Read())
                     {
-                        rtbResult.AppendText("-> Фирма #" + dr["id_company"] + " -- " + dr["name"] + " -- " + dr["id_physical_address"] + " -- " + dr["id_owner"] + "\n");
+                        rtbResult.AppendText("-> Р¤РёСЂРјР° #" + dr["id_company"] + " -- " + dr["name"] + " -- " + dr["id_physical_address"] + " -- " + dr["id_owner"] + "\n");
                     }
                 }
             }
             catch (DbException ex)
             {
-                // Протоколировать исключение
+                // РџСЂРѕС‚РѕРєРѕР»РёСЂРѕРІР°С‚СЊ РёСЃРєР»СЋС‡РµРЅРёРµ
                 Console.WriteLine(ex.Message);
             }
             finally
             {
-                // Гарантировать высвобождение подключения
+                // Р“Р°СЂР°РЅС‚РёСЂРѕРІР°С‚СЊ РІС‹СЃРІРѕР±РѕР¶РґРµРЅРёРµ РїРѕРґРєР»СЋС‡РµРЅРёСЏ
                 cn.Close();
             }
 
