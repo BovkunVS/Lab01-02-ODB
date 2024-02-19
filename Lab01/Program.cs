@@ -1,4 +1,4 @@
-namespace Lab01
+namespace ExibitionConnectedLayer
 {
     internal static class Program
     {
