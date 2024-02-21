@@ -138,32 +138,18 @@ namespace ExibitionDAL
             }
         }
 
-        public DataTable GetAllContractAsDataTable(int maxRows)
+        public DataTable GetAllDataAsDataTable(int maxRows, string tableName)
         {
-            DataTable dataTable = new DataTable();
-            string sql = "SELECT TOP (@maxRows) * FROM Contract";
+            DataTable data = new DataTable();
+            string sql = $"SELECT TOP (@maxRows) * FROM {tableName}";
             using (SqlCommand cmd = new SqlCommand(sql, connect))
             {
                 cmd.Parameters.AddWithValue("@maxRows", maxRows);
                 SqlDataReader dr = cmd.ExecuteReader();
-                dataTable.Load(dr);
+                data.Load(dr);
                 dr.Close();
             }
-            return dataTable;
-        }
-
-        public DataTable GetAllProductsAsDataTable(int maxRows)
-        {
-            DataTable dataTable = new DataTable();
-            string sql = "SELECT TOP (@maxRows) * FROM Products";
-            using (SqlCommand cmd = new SqlCommand(sql, connect))
-            {
-                cmd.Parameters.AddWithValue("@maxRows", maxRows);
-                SqlDataReader dr = cmd.ExecuteReader();
-                dataTable.Load(dr);
-                dr.Close();
-            }
-            return dataTable;
+            return data;
         }
 
         public int CreateContract(string recipientCompanyID, string supplierCompanyID, string productID, DateTime dateOfConclusion, int deadline)
@@ -224,5 +210,60 @@ namespace ExibitionDAL
             return newContractID;
         }
 
+        public void NonParticipatingProducts(bool throwEx, string id_products)
+        {
+            // Выборка названия компании по идентификатору продукта
+            string id_company = string.Empty;
+
+            SqlCommand cmdSelect = new SqlCommand(
+                string.Format("SELECT * FROM Products WHERE id_products = '{0}'", id_products), connect);
+            using (SqlDataReader dr = cmdSelect.ExecuteReader())
+            {
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    id_company = (string)dr["id_company"];
+                }
+                else return;
+            }
+
+            // Создание объектов команд для каждого шага операции
+            SqlCommand cmdRemove = new SqlCommand(
+                string.Format("DELETE FROM Products WHERE id_products = '{0}'", id_products), connect);
+            SqlCommand cmdRemoveContract = new SqlCommand(
+                string.Format("DELETE FROM Contract WHERE id_product = '{0}'", id_products), connect);
+            SqlCommand cmdInsert = new SqlCommand(
+                string.Format("INSERT INTO NonParticipatingProducts (id_products, id_company) VALUES " +
+                              "('{0}', '{1}')", id_products, id_company), connect);
+
+            // Получение из объекта подключения
+            SqlTransaction tx = null;
+            try
+            {
+                tx = connect.BeginTransaction();
+                // Включение команд в транзакцию
+                cmdInsert.Transaction = tx;
+                cmdRemoveContract.Transaction = tx;
+                cmdRemove.Transaction = tx;
+                // Выполнение команд
+                cmdInsert.ExecuteNonQuery();
+                cmdRemoveContract.ExecuteNonQuery();
+                cmdRemove.ExecuteNonQuery();
+                // Имитация ошибки
+                if (throwEx)
+                {
+                    throw new ApplicationException("Ошибка базы данных! Транзакция завершена неудачно.");
+                }
+                // Фиксация
+                tx.Commit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                // При возникновении любой ошибки выполняется откат транзакции
+                tx.Rollback();
+            }
+        }
+    
     }
 }

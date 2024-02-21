@@ -36,8 +36,9 @@
             insertOwnerToolStripMenuItem = new ToolStripMenuItem();
             deleteContractToolStripMenuItem = new ToolStripMenuItem();
             updateCompanyToolStripMenuItem = new ToolStripMenuItem();
-            dataTableProductsToolStripMenuItem = new ToolStripMenuItem();
+            dataTableSelectToolStripMenuItem = new ToolStripMenuItem();
             createContractToolStripMenuItem = new ToolStripMenuItem();
+            removeProductsToolStripMenuItem = new ToolStripMenuItem();
             btnExecute = new ToolStripButton();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
@@ -69,7 +70,7 @@
             // ToolStripMenuItem
             // 
             ToolStripMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadingToolStripMenuItem, insertOwnerToolStripMenuItem, deleteContractToolStripMenuItem, updateCompanyToolStripMenuItem, dataTableProductsToolStripMenuItem, createContractToolStripMenuItem });
+            ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadingToolStripMenuItem, insertOwnerToolStripMenuItem, deleteContractToolStripMenuItem, updateCompanyToolStripMenuItem, dataTableSelectToolStripMenuItem, createContractToolStripMenuItem, removeProductsToolStripMenuItem });
             ToolStripMenuItem.Image = (Image)resources.GetObject("ToolStripMenuItem.Image");
             ToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             ToolStripMenuItem.Name = "ToolStripMenuItem";
@@ -82,7 +83,7 @@
             loadingToolStripMenuItem.Font = new Font("Century Gothic", 9F);
             loadingToolStripMenuItem.Name = "loadingToolStripMenuItem";
             loadingToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            loadingToolStripMenuItem.Size = new Size(368, 26);
+            loadingToolStripMenuItem.Size = new Size(370, 26);
             loadingToolStripMenuItem.Text = "Загрузка";
             loadingToolStripMenuItem.ToolTipText = "Подключение к БД";
             loadingToolStripMenuItem.Click += loadingToolStripMenuItem_Click;
@@ -93,7 +94,7 @@
             insertOwnerToolStripMenuItem.Font = new Font("Century Gothic", 9F);
             insertOwnerToolStripMenuItem.Name = "insertOwnerToolStripMenuItem";
             insertOwnerToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D1;
-            insertOwnerToolStripMenuItem.Size = new Size(368, 26);
+            insertOwnerToolStripMenuItem.Size = new Size(370, 26);
             insertOwnerToolStripMenuItem.Text = "Добавление владельца";
             insertOwnerToolStripMenuItem.ToolTipText = "Скрипт INSERT";
             insertOwnerToolStripMenuItem.Click += insertOwnerToolStripMenuItem_Click;
@@ -104,7 +105,7 @@
             deleteContractToolStripMenuItem.Font = new Font("Century Gothic", 9F);
             deleteContractToolStripMenuItem.Name = "deleteContractToolStripMenuItem";
             deleteContractToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D2;
-            deleteContractToolStripMenuItem.Size = new Size(368, 26);
+            deleteContractToolStripMenuItem.Size = new Size(370, 26);
             deleteContractToolStripMenuItem.Text = "Удаление контракта";
             deleteContractToolStripMenuItem.ToolTipText = "скрипт DELETE";
             deleteContractToolStripMenuItem.Click += deleteContractToolStripMenuItem_Click;
@@ -115,21 +116,21 @@
             updateCompanyToolStripMenuItem.Font = new Font("Century Gothic", 9F);
             updateCompanyToolStripMenuItem.Name = "updateCompanyToolStripMenuItem";
             updateCompanyToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D3;
-            updateCompanyToolStripMenuItem.Size = new Size(368, 26);
+            updateCompanyToolStripMenuItem.Size = new Size(370, 26);
             updateCompanyToolStripMenuItem.Text = "Изменить название компании";
             updateCompanyToolStripMenuItem.ToolTipText = "скрипт UPDATE";
             updateCompanyToolStripMenuItem.Click += updateCompanyToolStripMenuItem_Click;
             // 
-            // dataTableProductsToolStripMenuItem
+            // dataTableSelectToolStripMenuItem
             // 
-            dataTableProductsToolStripMenuItem.CheckOnClick = true;
-            dataTableProductsToolStripMenuItem.Font = new Font("Century Gothic", 9F);
-            dataTableProductsToolStripMenuItem.Name = "dataTableProductsToolStripMenuItem";
-            dataTableProductsToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D4;
-            dataTableProductsToolStripMenuItem.Size = new Size(368, 26);
-            dataTableProductsToolStripMenuItem.Text = "Данные таблицы Продукция";
-            dataTableProductsToolStripMenuItem.ToolTipText = "скрипт SELECT TOP";
-            dataTableProductsToolStripMenuItem.Click += dataTableProductsToolStripMenuItem_Click;
+            dataTableSelectToolStripMenuItem.CheckOnClick = true;
+            dataTableSelectToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            dataTableSelectToolStripMenuItem.Name = "dataTableSelectToolStripMenuItem";
+            dataTableSelectToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D4;
+            dataTableSelectToolStripMenuItem.Size = new Size(370, 26);
+            dataTableSelectToolStripMenuItem.Text = "Данные выбранной таблицы";
+            dataTableSelectToolStripMenuItem.ToolTipText = "скрипт SELECT TOP";
+            dataTableSelectToolStripMenuItem.Click += dataTableSelectToolStripMenuItem_Click;
             // 
             // createContractToolStripMenuItem
             // 
@@ -137,10 +138,20 @@
             createContractToolStripMenuItem.Font = new Font("Century Gothic", 9F);
             createContractToolStripMenuItem.Name = "createContractToolStripMenuItem";
             createContractToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D5;
-            createContractToolStripMenuItem.Size = new Size(368, 26);
+            createContractToolStripMenuItem.Size = new Size(370, 26);
             createContractToolStripMenuItem.Text = "Заключение договора";
             createContractToolStripMenuItem.ToolTipText = "Процедура";
             createContractToolStripMenuItem.Click += createContractToolStripMenuItem_Click;
+            // 
+            // removeProductsToolStripMenuItem
+            // 
+            removeProductsToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            removeProductsToolStripMenuItem.Name = "removeProductsToolStripMenuItem";
+            removeProductsToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.D6;
+            removeProductsToolStripMenuItem.Size = new Size(370, 26);
+            removeProductsToolStripMenuItem.Text = "Убрать продукцию с выставки";
+            removeProductsToolStripMenuItem.ToolTipText = "Транзакция";
+            removeProductsToolStripMenuItem.Click += removeProductsToolStripMenuItem_Click;
             // 
             // btnExecute
             // 
@@ -160,9 +171,9 @@
             statusStrip.Font = new Font("Cascadia Mono", 8.5F, FontStyle.Bold);
             statusStrip.ImageScalingSize = new Size(20, 20);
             statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel });
-            statusStrip.Location = new Point(0, 407);
+            statusStrip.Location = new Point(0, 409);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(852, 24);
+            statusStrip.Size = new Size(852, 22);
             statusStrip.Stretch = false;
             statusStrip.TabIndex = 2;
             statusStrip.Text = "statusStrip1";
@@ -170,7 +181,7 @@
             // toolStripStatusLabel
             // 
             toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(0, 18);
+            toolStripStatusLabel.Size = new Size(0, 16);
             // 
             // Form1
             // 
@@ -205,7 +216,8 @@
         private ToolStripButton btnExecute;
         private ToolStripMenuItem deleteContractToolStripMenuItem;
         private ToolStripMenuItem updateCompanyToolStripMenuItem;
-        private ToolStripMenuItem dataTableProductsToolStripMenuItem;
+        private ToolStripMenuItem dataTableSelectToolStripMenuItem;
         private ToolStripMenuItem createContractToolStripMenuItem;
+        private ToolStripMenuItem removeProductsToolStripMenuItem;
     }
 }

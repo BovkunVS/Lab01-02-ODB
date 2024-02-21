@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
+using System.Data;
 using System.Data.Common;
+using System.Windows.Forms;
 
 namespace ExibitionConnectedLayer
 {
@@ -86,15 +88,15 @@ namespace ExibitionConnectedLayer
             toolStripStatusLabel.Text = "Введите такие параметры через пробел: <id> <new_name_company>";
         }
 
-        private void dataTableProductsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void dataTableSelectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearMenuChecks();
-            dataTableProductsToolStripMenuItem.Checked = true;
+            dataTableSelectToolStripMenuItem.Checked = true;
 
             rtbResult.Clear();
 
             toolStripStatusLabel.Text = "";
-            toolStripStatusLabel.Text = "Введите такие параметры через пробел: <count_value>";
+            toolStripStatusLabel.Text = "Введите такие параметры через пробел: <count_value> <nameTable>";
         }
 
         private void createContractToolStripMenuItem_Click(object sender, EventArgs e)
@@ -108,6 +110,17 @@ namespace ExibitionConnectedLayer
             toolStripStatusLabel.Text = "Через пробел: <companyID1> <companyID2> <productID> <dateOfConclusion> <deadline>";
         }
 
+        private void removeProductsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearMenuChecks();
+            removeProductsToolStripMenuItem.Checked = true;
+
+            rtbResult.Clear();
+
+            toolStripStatusLabel.Text = "";
+            toolStripStatusLabel.Text = "Через пробел: <true/false> <productID>";
+        }
+
         private void btnExecute_Click(object sender, EventArgs e)
         {
             string input = rtbResult.Text.Trim();
@@ -117,7 +130,7 @@ namespace ExibitionConnectedLayer
 
             try
             {
-                exibitionDAL.OpenConnection(connectionString); // Подключение
+                exibitionDAL.OpenConnection(connectionString); // Подключение к DAL
 
                 foreach (string line in lines)
                 {
@@ -135,14 +148,42 @@ namespace ExibitionConnectedLayer
                     {
                         exibitionDAL.UpdateCompanyName(parameters[0], parameters[1]);
                     }
-                    else if (dataTableProductsToolStripMenuItem.Checked && parameters.Length == 1)
+                    else if (dataTableSelectToolStripMenuItem.Checked && parameters.Length == 2)
                     {
-                        exibitionDAL.GetAllProductsAsDataTable(int.Parse(parameters[0]));
+                        DataTable table = exibitionDAL.GetAllDataAsDataTable(int.Parse(parameters[0]), parameters[1]);
+
+                        rtbResult.Clear();
+
+                        // Проверка о получении данных 
+                        if (table != null && table.Rows.Count > 0)
+                        {
+                            foreach (DataRow row in table.Rows)
+                            {
+                                int columnCount = table.Columns.Count;
+                                for (int i = 0; i < columnCount; i++)
+                                {
+                                    rtbResult.AppendText(row[i].ToString());
+                                    if (i < columnCount - 1)
+                                    {
+                                        rtbResult.AppendText(" --- ");
+                                    }
+                                }
+                                rtbResult.AppendText("\n");
+                            }
+                        }
+                        else
+                        {
+                            rtbResult.AppendText("Данные не найдены");
+                        }
                     }
                     else if (createContractToolStripMenuItem.Checked && parameters.Length == 5)
                     {
                         int newContractID = exibitionDAL.CreateContract(parameters[0], parameters[1], parameters[2], DateTime.Parse(parameters[3]), int.Parse(parameters[4]));
                         MessageBox.Show($"Операция выполнена успешно. Новый индекс контракта: {newContractID}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (removeProductsToolStripMenuItem.Checked && parameters.Length == 2)
+                    {
+                        exibitionDAL.NonParticipatingProducts(bool.Parse(parameters[0]), parameters[1]);
                     }
                     else
                     {
@@ -167,8 +208,10 @@ namespace ExibitionConnectedLayer
             insertOwnerToolStripMenuItem.Checked = false;
             deleteContractToolStripMenuItem.Checked = false;
             updateCompanyToolStripMenuItem.Checked = false;
-            dataTableProductsToolStripMenuItem.Checked = false;
+            dataTableSelectToolStripMenuItem.Checked = false;
             createContractToolStripMenuItem.Checked = false;
+            removeProductsToolStripMenuItem.Checked = false;
         }
+
     }
 }
