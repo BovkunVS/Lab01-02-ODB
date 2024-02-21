@@ -152,7 +152,7 @@ namespace ExibitionConnectedLayer
                     {
                         DataTable table = exibitionDAL.GetAllDataAsDataTable(int.Parse(parameters[0]), parameters[1]);
 
-                        rtbResult.Clear();
+                        rtbResult.AppendText("\n");
 
                         // Проверка о получении данных 
                         if (table != null && table.Rows.Count > 0)
