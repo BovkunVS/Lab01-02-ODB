@@ -216,6 +216,8 @@ namespace ExibitionConnectedLayer
             removeProductsToolStripMenuItem.Checked = false;
         }
 
+        //==============Lab02==================
+        
         private void createDatasetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtbResult.Clear();
