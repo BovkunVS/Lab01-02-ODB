@@ -40,6 +40,12 @@
             createContractToolStripMenuItem = new ToolStripMenuItem();
             removeProductsToolStripMenuItem = new ToolStripMenuItem();
             btnExecute = new ToolStripButton();
+            toolStripDropDownButton1 = new ToolStripDropDownButton();
+            createDatasetToolStripMenuItem = new ToolStripMenuItem();
+            PrintOwnerTableToolStripMenuItem = new ToolStripMenuItem();
+            FillDataSetAdapterToolStripMenuItem = new ToolStripMenuItem();
+            ModifyDataSetAdapterToolStripMenuItem = new ToolStripMenuItem();
+            DeleteRowFromTableToolStripMenuItem = new ToolStripMenuItem();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
             toolStrip1.SuspendLayout();
@@ -60,7 +66,7 @@
             toolStrip1.BackColor = Color.LightBlue;
             toolStrip1.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
             toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { ToolStripMenuItem, btnExecute });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { ToolStripMenuItem, btnExecute, toolStripDropDownButton1 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(852, 25);
@@ -165,6 +171,66 @@
             btnExecute.Text = "Выполнить";
             btnExecute.Click += btnExecute_Click;
             // 
+            // toolStripDropDownButton1
+            // 
+            toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { createDatasetToolStripMenuItem, PrintOwnerTableToolStripMenuItem, FillDataSetAdapterToolStripMenuItem, ModifyDataSetAdapterToolStripMenuItem, DeleteRowFromTableToolStripMenuItem });
+            toolStripDropDownButton1.Image = (Image)resources.GetObject("toolStripDropDownButton1.Image");
+            toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
+            toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            toolStripDropDownButton1.Size = new Size(68, 22);
+            toolStripDropDownButton1.Text = "Файл2";
+            // 
+            // createDatasetToolStripMenuItem
+            // 
+            createDatasetToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            createDatasetToolStripMenuItem.Name = "createDatasetToolStripMenuItem";
+            createDatasetToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.Q;
+            createDatasetToolStripMenuItem.Size = new Size(475, 26);
+            createDatasetToolStripMenuItem.Text = "Заполнение DataSet таблицами";
+            createDatasetToolStripMenuItem.ToolTipText = "CreateDataSet";
+            createDatasetToolStripMenuItem.Click += createDatasetToolStripMenuItem_Click;
+            // 
+            // PrintOwnerTableToolStripMenuItem
+            // 
+            PrintOwnerTableToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            PrintOwnerTableToolStripMenuItem.Name = "PrintOwnerTableToolStripMenuItem";
+            PrintOwnerTableToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D1;
+            PrintOwnerTableToolStripMenuItem.Size = new Size(475, 26);
+            PrintOwnerTableToolStripMenuItem.Text = "Вывести содержимое таблицы Owner";
+            PrintOwnerTableToolStripMenuItem.ToolTipText = "PrintTable";
+            PrintOwnerTableToolStripMenuItem.Click += PrintOwnerTableToolStripMenuItem_Click;
+            // 
+            // FillDataSetAdapterToolStripMenuItem
+            // 
+            FillDataSetAdapterToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            FillDataSetAdapterToolStripMenuItem.Name = "FillDataSetAdapterToolStripMenuItem";
+            FillDataSetAdapterToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D2;
+            FillDataSetAdapterToolStripMenuItem.Size = new Size(475, 26);
+            FillDataSetAdapterToolStripMenuItem.Text = "Заполнение данных из MS SQL Server";
+            FillDataSetAdapterToolStripMenuItem.ToolTipText = "FillDataSetAdapter";
+            FillDataSetAdapterToolStripMenuItem.Click += FillDataSetAdapterToolStripMenuItem_Click;
+            // 
+            // ModifyDataSetAdapterToolStripMenuItem
+            // 
+            ModifyDataSetAdapterToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            ModifyDataSetAdapterToolStripMenuItem.Name = "ModifyDataSetAdapterToolStripMenuItem";
+            ModifyDataSetAdapterToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D3;
+            ModifyDataSetAdapterToolStripMenuItem.Size = new Size(475, 26);
+            ModifyDataSetAdapterToolStripMenuItem.Text = "Модификация данных из MS SQL Server";
+            ModifyDataSetAdapterToolStripMenuItem.ToolTipText = "ModifyDataSetAdapter";
+            ModifyDataSetAdapterToolStripMenuItem.Click += ModifyDataSetAdapterToolStripMenuItem_Click;
+            // 
+            // DeleteRowFromTableToolStripMenuItem
+            // 
+            DeleteRowFromTableToolStripMenuItem.Font = new Font("Century Gothic", 9F);
+            DeleteRowFromTableToolStripMenuItem.Name = "DeleteRowFromTableToolStripMenuItem";
+            DeleteRowFromTableToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D4;
+            DeleteRowFromTableToolStripMenuItem.Size = new Size(475, 26);
+            DeleteRowFromTableToolStripMenuItem.Text = "Удаление данных 1 строки таблицы Contract";
+            DeleteRowFromTableToolStripMenuItem.ToolTipText = "DeleteRowFromTable";
+            DeleteRowFromTableToolStripMenuItem.Click += DeleteRowFromTableToolStripMenuItem_Click;
+            // 
             // statusStrip
             // 
             statusStrip.BackColor = SystemColors.Control;
@@ -195,7 +261,7 @@
             Font = new Font("Century Gothic", 9F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Form1";
-            Text = "ADO.NET: connected layer";
+            Text = "ADO.NET: connected layer + disconnected layer";
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             statusStrip.ResumeLayout(false);
@@ -219,5 +285,11 @@
         private ToolStripMenuItem dataTableSelectToolStripMenuItem;
         private ToolStripMenuItem createContractToolStripMenuItem;
         private ToolStripMenuItem removeProductsToolStripMenuItem;
+        private ToolStripDropDownButton toolStripDropDownButton1;
+        private ToolStripMenuItem createDatasetToolStripMenuItem;
+        private ToolStripMenuItem PrintOwnerTableToolStripMenuItem;
+        private ToolStripMenuItem FillDataSetAdapterToolStripMenuItem;
+        private ToolStripMenuItem ModifyDataSetAdapterToolStripMenuItem;
+        private ToolStripMenuItem DeleteRowFromTableToolStripMenuItem;
     }
 }

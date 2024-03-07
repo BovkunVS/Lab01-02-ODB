@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab01", "Lab01\Lab01.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExibitionDAL", "ExibitionDAL\ExibitionDAL.csproj", "{B35F3319-D2FE-41F5-B204-0EFB0368A4C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExibitionDisconnectedLayer", "ExibitionDisconnectedLayer\ExibitionDisconnectedLayer.csproj", "{915B407B-17F2-4DFC-B615-E48269145C03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B35F3319-D2FE-41F5-B204-0EFB0368A4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B35F3319-D2FE-41F5-B204-0EFB0368A4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B35F3319-D2FE-41F5-B204-0EFB0368A4C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{915B407B-17F2-4DFC-B615-E48269145C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{915B407B-17F2-4DFC-B615-E48269145C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{915B407B-17F2-4DFC-B615-E48269145C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{915B407B-17F2-4DFC-B615-E48269145C03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

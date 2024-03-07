@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExibitionDAL\ExibitionDAL.csproj" />
+    <ProjectReference Include="..\ExibitionDisconnectedLayer\ExibitionDisconnectedLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
